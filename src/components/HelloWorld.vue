@@ -5,6 +5,7 @@
     <el-button type="primary" @click="save">保存</el-button>
     <router-link to="/hell">表单</router-link>
     <router-link to="/wangzhan">网站</router-link>
+    <router-link to="/zhaizhangxin">翟张鑫的demo</router-link>
     <el-table
     ref="multipleTable"
     :data="tableData3"
