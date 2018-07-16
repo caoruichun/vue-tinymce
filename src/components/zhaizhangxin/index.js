@@ -1,3 +1,5 @@
+import { log } from "core-js";
+
 let id = 1000;
 export default {
   created() {
@@ -77,13 +79,16 @@ export default {
         value: '5',
         label: '第5课时'
       }],
-      value2: ''
+      value2: '',
+      id:new Date().getTime(),
+      centerDialogVisible: false,
+      input:'',//编辑
+      modifyID:[]
     };
   },
   filters: {
 
   },
-
   methods: {
     //追加数据
     alertNewAddZhang() {
@@ -93,45 +98,37 @@ export default {
         label: `课程章节${id++}`,
         children: []
       };
-      for (let i = 1; i < this.value; i++) {
+      for (let i = 1; i <= this.value; i++) {
         var newChild1 = {};
-        newChild1.id = i + 11322;
+        newChild1.id = this.id+i;
         newChild1.label = `课程章节${i}`;
         newChild1.tianjia = true;
         newChild1.children=[]
-        for (let y = 1; y < this.value2; y++) {
-        var newChild2 ={};
-        newChild2.id = y + 101322;
-        newChild2.label = `课时${y}`;
-        newChild2.tianjia = false;
-        newChild1.children.push(newChild2);
-      }
+        for (let y = 1; y <= this.value2; y++) {
+          var newChild2 ={};
+          newChild2.id = this.id+y;
+          newChild2.label = `课时${y}`;
+          newChild2.tianjia = false;
+          newChild1.children.push(newChild2);
+        }
       this.data5.push(newChild1);
       }
-      
-
-    },
-    //xianshi
-    Show(node, data) {
-      //console.log(node,'111111111111',data);
-
-    },
-    //yincang
-    hidden(node, data) {
-      //console.log(node,'111111111111',data);
-
     },
     // 编辑
-    modify(data) {
-      const newChild = {
-        id: id++,
-        label: '课时',
-        children: []
-      };
-      if (!data.children) {
-        this.$set(data, 'children', []);
-      }
-      data.children.push(newChild);
+    modify(node,data) {
+      this.modifyID=data;
+      this.centerDialogVisible=true;
+      this.input=data.label;
+      
+    },
+    //保存
+    save(){
+      this.centerDialogVisible=false;
+      const parent = this.data5;
+     
+      // const children = parent.data.children || parent.data;
+      // const index = children.findIndex(d => d.id === data.id);
+    
     },
     //添加
     append(data) {

@@ -16,7 +16,7 @@
       node-key="id"
       default-expand-all
       :expand-on-click-node="false">
-      <span class="custom-tree-node" @mouseover="Show(node, data)" @mouseout="hidden(node, data)"  slot-scope="{ node, data }">
+      <span class="custom-tree-node" slot-scope="{ node, data }">
         <span>{{ node.label }}</span>
         <span class="hover">
           <el-button
@@ -28,7 +28,7 @@
           </el-button>
           <el-button
             type="text"
-            size="mini">
+            size="mini" @click="modify(node, data)">
             编辑
           </el-button>
           <el-button
@@ -74,6 +74,17 @@
   <span slot="footer" class="dialog-footer">
     <el-button @click="alertBox = false">取 消</el-button>
     <el-button type="primary" @click="alertNewAddZhang()">确 定</el-button>
+  </span>
+</el-dialog>
+<el-dialog
+  title="修改"
+  :visible.sync="centerDialogVisible"
+  width="30%"
+  center>
+  <span slot="footer" class="dialog-footer">
+    <el-input  v-model="input" placeholder="请输入内容"></el-input>
+    <el-button @click="centerDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="save">确 定</el-button>
   </span>
 </el-dialog>
 </el-row>
