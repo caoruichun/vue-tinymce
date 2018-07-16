@@ -18,7 +18,7 @@
       :expand-on-click-node="false">
       <span class="custom-tree-node" @mouseover="Show(node, data)" @mouseout="hidden(node, data)"  slot-scope="{ node, data }">
         <span>{{ node.label }}</span>
-        <span >
+        <span class="hover">
           <el-button
             type="text"
             size="mini"

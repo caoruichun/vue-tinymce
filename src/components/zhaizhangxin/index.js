@@ -93,27 +93,22 @@ export default {
         label: `课程章节${id++}`,
         children: []
       };
-
-      console.log(this.value)
-      console.log(this.value2)
       for (let i = 1; i < this.value; i++) {
         var newChild1 = {};
-        
         newChild1.id = i + 11322;
         newChild1.label = `课程章节${i}`;
         newChild1.tianjia = true;
-        console.log(newChild1)
-        this.data5.push(newChild1);
+        newChild1.children=[]
+        for (let y = 1; y < this.value2; y++) {
+        var newChild2 ={};
+        newChild2.id = y + 101322;
+        newChild2.label = `课时${y}`;
+        newChild2.tianjia = false;
+        newChild1.children.push(newChild2);
       }
-      // for (let y = 1; y < this.value2; y++) {
-      //   var newChild2 ={};
-      //   newChild2.children[y].id = y + 101322;
-        // newChild2.label = `课时${y}`;
-        // newChild2.tianjia = false;
-        console.log(newChild2);
-        
-        //this.data5.children.push(newChild2);
-     // }
+      this.data5.push(newChild1);
+      }
+      
 
     },
     //xianshi
