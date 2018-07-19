@@ -57,7 +57,7 @@
       label="操作"
       width="100">
       <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+        <el-button @click="handleDelete(scope.$index, scope.row)" type="text" size="small">{{ scope.row.quan==0?'停用':'启用' }}</el-button>
         <el-button type="text" size="small">编辑</el-button>
       </template>
     </el-table-column>
@@ -161,8 +161,12 @@ export default {
     };
   },
   methods: {
-    handleClick(res){
-      console.log(res);
+    handleDelete(res,res1){
+      if(res1.quan){
+        res1.quan=0
+      }else{
+        res1.quan=1
+      }
       
     },
     //权限
