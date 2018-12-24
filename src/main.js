@@ -6,6 +6,7 @@ import Vue from 'vue'
 import VueResource from 'vue-resource'
 import App from './App'
 import router from './router'
+import 'mint-ui/lib/style.css'
 
 Vue.use(VueResource)
 Vue.use(ElementUI)

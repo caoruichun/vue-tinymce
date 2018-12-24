@@ -1,72 +1,76 @@
 <template>
- <el-table :data="users" highlight-current-row style="width: 100%;">
-    <el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
-    </el-table-column>
-    <el-table-column prop="cz" label="操作" width="320">
-         <template slot-scope="scope">
-             <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-             <el-button size="small" @click="handleEdit(scope.$index, scope.row)"> {{scope.row.status | formatStatus}} </el-button>
-         </template>
-     </el-table-column>
-</el-table>
+  <div id="content" ref="wrapper" :style="{ height: (wrapperHeight-50) + 'px' }">
+    <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
+      <div class="item" v-for="data in list">
+        <div class="name">{{data.name}}</div>
+      </div>
+    </mt-loadmore>
+  </div>
+
 </template>
 
+
 <script>
+import {Loadmore} from 'mint-ui'
+ var p = 10;
 export default {
-  created() {
-    this.$http.get('/api/getNewsList')
-    .then(function(date){
-      console.log(date);
-      
-    },function(err){
-      console.log(err);
-    })
-  },
+  name:'hell',
+
   data() {
     return {
-      users: [
-        {
-          sex: 1,
-          cx: false,
-          status: 1
-        },
-        {
-          sex: 0,
-          cx: false,
-          status: 2
-        },
-        {
-          sex: 1,
-          cx: false,
-          status: 2
-        },
-        {
-          sex: 0,
-          cx: false,
-          status: 2
-        }
-      ]
+      list:[],
+      allLoaded:false,
+      scrollMode:"auto",
+      isAutoFill:false,
+      wrapperHeight: 0,
     };
   },
-  filters: {
-    formatStatus: function(val) {
-      return val == 1 ? "上架" : val == 2 ? "下架" : "未知";
-    }
+  components:{
+   'mt-loadmore' :Loadmore
   },
-  
+  mounted(){
+    // 父控件要加上高度，否则会出现上拉不动的情况
+    this.wrapperHeight =
+      document.documentElement.clientHeight -
+      this.$refs.wrapper.getBoundingClientRect().top
+    console.log(this.wrapperHeight)
+    this.getList()
+  },
   methods: {
-    //性别显示转换
-    formatSex: function(row, column) {
-      return row.sex == 1 ? "男" : row.sex == 0 ? "女" : "未知";
+    loadBottom: function(){
+      this.$refs.loadmore.onBottomLoaded();
+      this.getList();
     },
-    handleEdit(res, index) {
-      console.log(res, index);
+    getList: function(){
+      var i = 0,list0 = [];
+      for(i ; i < p;i ++){
+        list0.push({demo:i});
+      }
+      p+=10;
+      console.log(p)
+      this.list =  list0;
+      if(p>=100){
+        this.allLoaded = true;
+      }
     }
   }
 };
 </script>
 
 <style>
+
+  #content{
+    overflow: scroll;
+    /*-webkit-overflow-scrolling: touch;*/
+  }
+  .item{
+
+  }
+  .item .name{
+    height: 20px;
+    background-color: green;
+    margin-bottom: 10px;
+  }
 .cell-edit-input .el-input,
 .el-input__inner {
   width: 100px;
